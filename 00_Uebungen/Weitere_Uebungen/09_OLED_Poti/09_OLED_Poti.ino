@@ -37,7 +37,7 @@ void loop()
   int Sensorwert = analogRead(A?);
 
   
-  int prozent = map(sensorWert, 0, 1023, 100, 0); // Rechnet Zahlen zwischen 1 und 1023 in Prozentwerte um.
+  int prozent = map(Sensorwert, 0, 1023, 100, 0); // Rechnet Zahlen zwischen 1 und 1023 in Prozentwerte um.
   Oled.setFont(u8x8_font_px437wyse700b_2x2_r); // Schriftart
   Oled.setCursor(0, 0);    // Position des Textes auf dem Display 
   Oled.print(prozent);  // Der Wert welcher unter der Variabel gespeichert ist wird auf dem Display angezeigt.

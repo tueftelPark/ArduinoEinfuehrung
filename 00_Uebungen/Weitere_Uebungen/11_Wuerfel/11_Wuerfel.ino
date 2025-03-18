@@ -13,6 +13,9 @@ digitalRead(PIN); <- liest den Zustand eines digitalen Pins (HIGH oder LOW), PIN
 random(MIN, MAX+1); <- generiert eine Zufallszahl zwischen MIN (inklusive) und MAX+1 (exklusive)
 delay(ZEIT); <- macht eine Pause mit der ZEIT in Millisekunden
 Oled.begin(); <- Startet die Kommunikation mit dem Display
+Oled.print("Text"); <- Auf dem Display wird Text angezeigt 
+Oled.print(Variabel); <- Auf dem Display die Variabel (Wert nicht der Name: x=2 print(x) => 2 auf Display ) angezeigt 
+Oled.println("Text"); <- Am Ende vom Text wird ein Enter eingefügt, sonst gleich wie Oled.print();
 */
 
 //Definiere zuerst die Variabeln
@@ -40,7 +43,6 @@ void setup() // Hier beginnt das Setup
 void loop() // Hier beginnt das Hauptprogramm
 {
     Oled.setFont(u8x8_font_amstrad_cpc_extended_r); //Schriftart
-    Oled.setCursor(33, 66); // Position der Schrift
   // Lese den Zustand des Buttons
   Tasterstatus = digitalRead(Button);
   
@@ -48,19 +50,21 @@ void loop() // Hier beginnt das Hauptprogramm
   if (Tasterstatus == HIGH) {
     Oled.clearDisplay();
     delay(10); 
-    // Generiere eine Zufallszahl zwischen 1 und 6
-    Zahl = random(1, 7);
+    Oled.setCursor(4, 1); // Position der Schrift
+
     // Zeige das Würfelergebnis auf dem OLED-Display an
 
     Oled.print("...");
     delay(1000);
     Oled.clearDisplay();
 
+    // Generiere eine Zufallszahl zwischen 1 und 6
+    Zahl = random(1, 7);
+    Oled.setCursor(5, 1);  // Position setzen (mögliche Anpassung je nach Display)
+
     //TODO: Zeige die Zahl auf dem Arduino OLED an
     
     
-
-    Oled.refreshDisplay(); // Update the Display
 
     //TODO: Warte eine halbe Sekunde, bevor ein neuer Wurf möglich ist
     
