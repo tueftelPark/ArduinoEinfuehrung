@@ -29,7 +29,7 @@ void Ton(int frequenz, int spielzeit) {
 void setup() {
   // Kein Setup nötig für den Buzzer
 }
-//TODO: Wähle ein Lied aus (Google) und spiel es ab!
+//TODO: Wähle ein Lied aus (erfinde selber eines) und spiel es ab!
 void loop() {
   // Beispiel: "Alle meine Entchen"
   Ton(C, Spielzeit); 
