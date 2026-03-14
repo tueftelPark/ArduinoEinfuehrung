@@ -18,10 +18,10 @@ Serial.begin(9600); <- Dieser Befehl wird gebraucht, damit auf die Konsole gesch
 
 //Definiere zuerst die Variabeln
 //TODO: XX mit PIN-Nummer für den Licht ersetzen (siehe SensorKit (mit A))
-int LichtSensor = A3 ;
+int LichtSensor = XX ;
 
 //TODO: XX mit PIN-Nummer für den LED ersetzen (auf dem SensorKit (ohne D))
-int LED = 6 ;
+int LED = XX ;
 
 int Helligkeit = 0;
 int Helligkeitsgrenze = 5; // Wert zwischen 0 und 1023 der die Helligkeit angibt bei der das Licht an-/abgeschaltet werden soll.
@@ -59,5 +59,7 @@ void loop() // Hier beginnt das Hauptprogramm
   }
 
   delay(AusleseAbstand);
+    //TODO: Wenn du alle TODOs gemacht hast, dann lade den Code hoch und öffne den Serial-Monitor.
+    //Der Serial-Monitor wird oben rechts mit der Lupe geöffnet. Darin kommen jetzt Zahlen, diese stehen für die Helligkeit im Raum.
 } // Hier endet ein Programmabschnitt
 
