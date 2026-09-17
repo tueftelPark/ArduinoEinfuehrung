@@ -1,0 +1,60 @@
+tüftelPark – Zusatzaufgabe 5: Programmieren mit ChatGPT
+=========================================================
+
+Was ist die Aufgabe?
+---------------------
+Ihr habt jetzt schon 4 Übungen selber programmiert. Jetzt probiert ihr etwas Neues:
+Ihr lasst euch von ChatGPT helfen, ein EIGENES Projekt mit dem Arduino SensorKit zu bauen!
+
+So geht's:
+1. Öffnet ChatGPT.
+2. Kopiert den ganzen Text unten (zwischen den Linien) und schickt ihn als ERSTE Nachricht.
+3. Jetzt kennt ChatGPT euer SensorKit. Schreibt ihm, was ihr bauen wollt - zum Beispiel:
+   "Ich möchte, dass die LED angeht, wenn ich den Button drücke, und gleichzeitig ein Ton
+   abgespielt wird."
+4. Nennt dabei die Bauteile mit ihren Namen (LED, Button, Buzzer, Lichtsensor, Poti,
+   OLED-Bildschirm) - dann weiss ChatGPT genau, was ihr meint.
+5. ChatGPT gibt euch den kompletten Code. Kopiert ihn in die Arduino IDE und probiert ihn aus!
+6. Funktioniert etwas nicht? Beschreibt ChatGPT genau, was passiert (oder nicht passiert) -
+   dann kann es euch weiterhelfen.
+
+
+-------- AB HIER KOPIEREN (als erste Nachricht an ChatGPT schicken) --------
+
+Ich bin 11 Jahre alt und lerne gerade programmieren im tüftelPark. Ich benutze ein
+Arduino Nano mit dem "Arduino SensorKit" (die Bibliothek dazu heisst
+Arduino_SensorKit.h). Auf meinem SensorKit sind folgende Bauteile schon fertig
+angeschlossen:
+
+- LED (einfache Leuchtdiode)
+- Button (Taster/Knopf)
+- Buzzer (kleiner Lautsprecher für Töne)
+- Lichtsensor (misst, wie hell es ist)
+- Sound-Sensor (misst Lautstärke)
+- Poti / Potentiometer (Drehknopf)
+- OLED-Bildschirm (kleiner Display, zeigt Text und einfache Zeichnungen)
+
+Ich sage dir jeweils, welches Bauteil ich benutzen will und was passieren soll.
+Bitte halte dich an diese Regeln, wenn du mir hilfst:
+
+1. Gib mir IMMER den kompletten Code, den ich 1:1 in die Arduino IDE einfügen kann
+   (mit void setup() und void loop()) - nicht nur ein kleines Stück Code.
+2. Erkläre kurz UND einfach, was der Code macht - ich bin erst 11, benutze bitte keine
+   Fachwörter ohne sie zu erklären.
+3. Schreibe Kommentare (mit //) in den Code, damit ich verstehe, was jede Zeile bedeutet.
+4. Frage mich, an welchem PIN (welcher Zahl) ein Bauteil angeschlossen ist, falls du es
+   nicht weisst - rate nicht einfach.
+5. Wenn ich sage, dass etwas nicht funktioniert, frag mich zuerst, was genau passiert
+   (oder nicht passiert), bevor du den Code veränderst.
+
+Bist du bereit? Dann frage mich, was ich als Erstes bauen möchte.
+
+-------- BIS HIER KOPIEREN --------
+
+
+Tipp für die Lehrperson / Betreuung
+-------------------------------------
+Dieser Prompt setzt ChatGPT lediglich in Kontext (Bauteile, Sprache, Code-Format).
+Er ersetzt keine Kontrolle durch eine Betreuungsperson: Kinder sollten den von ChatGPT
+gelieferten Code trotzdem gemeinsam mit euch hochladen und ausprobieren, nicht
+unbeaufsichtigt an der Hardware herumprobieren.
