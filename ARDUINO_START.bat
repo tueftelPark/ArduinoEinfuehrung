@@ -16,7 +16,8 @@ if not defined IDE if exist "%ProgramFiles(x86)%\Arduino\arduino.exe" set "IDE=%
 if defined IDE (
   call :neuer_sketch
   echo Starte Arduino IDE mit neuem Sketch ...
-  start "" "%IDE%" "%SKETCH%"
+  REM Ueber WMI starten: die IDE laeuft so unabhaengig vom Konsolenfenster
+  powershell -NoProfile -Command "$q=[char]34; $r=Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine=$q+$env:IDE+$q+' '+$q+$env:SKETCH+$q}; if ($r.ReturnValue -ne 0) { exit 1 }" >nul 2>&1 || start "" "%IDE%" "%SKETCH%"
 ) else (
   echo [FEHLER] Arduino IDE nicht gefunden. Bitte von https://www.arduino.cc/en/software installieren.
 )
@@ -24,7 +25,7 @@ if defined IDE (
 REM Uebungen im Standard-Browser oeffnen
 if exist "%UEBUNGEN%" (
   echo Oeffne Uebungen im Browser ...
-  start "" "%UEBUNGEN%"
+  explorer.exe "%UEBUNGEN%"
 ) else (
   echo [FEHLER] Uebungsseite nicht gefunden: %UEBUNGEN%
   pause
@@ -32,7 +33,7 @@ if exist "%UEBUNGEN%" (
 )
 
 if not defined IDE pause
-goto :eof
+exit
 
 REM ------------------------------------------------------------
 REM Neuen leeren Sketch im Sketchbook anlegen (Name mit Zeitstempel)
