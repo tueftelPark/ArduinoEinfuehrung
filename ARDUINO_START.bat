@@ -14,8 +14,9 @@ if not defined IDE if exist "%ProgramFiles%\Arduino\arduino.exe" set "IDE=%Progr
 if not defined IDE if exist "%ProgramFiles(x86)%\Arduino\arduino.exe" set "IDE=%ProgramFiles(x86)%\Arduino\arduino.exe"
 
 if defined IDE (
-  echo Starte Arduino IDE ...
-  start "" "%IDE%"
+  call :neuer_sketch
+  echo Starte Arduino IDE mit neuem Sketch ...
+  start "" "%IDE%" "%SKETCH%"
 ) else (
   echo [FEHLER] Arduino IDE nicht gefunden. Bitte von https://www.arduino.cc/en/software installieren.
 )
@@ -31,3 +32,27 @@ if exist "%UEBUNGEN%" (
 )
 
 if not defined IDE pause
+goto :eof
+
+REM ------------------------------------------------------------
+REM Neuen leeren Sketch im Sketchbook anlegen (Name mit Zeitstempel)
+REM ------------------------------------------------------------
+:neuer_sketch
+set "SKETCHBOOK=%USERPROFILE%\Documents\Arduino"
+for /f %%t in ('powershell -NoProfile -Command "Get-Date -Format yyyyMMdd_HHmmss"') do set "STAMP=%%t"
+set "NAME=sketch_%STAMP%"
+set "SKETCHDIR=%SKETCHBOOK%\%NAME%"
+set "SKETCH=%SKETCHDIR%\%NAME%.ino"
+if not exist "%SKETCHDIR%" mkdir "%SKETCHDIR%"
+(
+  echo void setup^(^) {
+  echo   // put your setup code here, to run once:
+  echo.
+  echo }
+  echo.
+  echo void loop^(^) {
+  echo   // put your main code here, to run repeatedly:
+  echo.
+  echo }
+) > "%SKETCH%"
+goto :eof
