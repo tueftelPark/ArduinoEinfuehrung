@@ -61,5 +61,5 @@ void loop()
 
   delay(AusleseAbstand);
 
-  //INFO: Fast fertig! Wenn alles grün ist: Code kopieren, in die Arduino IDE einfügen und hochladen. Danach klickst du in der Arduino IDE oben rechts auf die LUPE (Serial-Monitor), schaust dir die Sensorwerte an und passt oben im Code die Zahl bei "Helligkeitsgrenze" an. Die genaue Anleitung mit Bildern findest du unten bei «Vom Code zum Arduino» (Schritte 6–8).
+  //INFO: Fast fertig! Lade jetzt deinen Code hoch. Öffne oben rechts mit dem Lupen-Symbol den Serial-Monitor - dort siehst du laufend Zahlen, das ist die gemessene Helligkeit. Halte die Hand über den Sensor und schau, wie sich die Zahl verändert. Passe danach oben die Zahl bei "Helligkeitsgrenze" an, bis die LED genau bei der richtigen Helligkeit angeht.
 } 

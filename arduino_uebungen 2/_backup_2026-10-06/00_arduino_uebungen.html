@@ -5,7 +5,7 @@
 <title>Arduino Übungen – tüftelPark</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="tp-logo.svg">
-<link rel="stylesheet" href="styles.css?2">
+<link rel="stylesheet" href="styles.css?1">
 </head>
 <body>
 
@@ -28,10 +28,6 @@
     <section class="intro-card">
         <h2 id="ex-title"></h2>
         <p id="ex-goal"></p>
-        <div class="roadmap-wrap">
-            <div class="roadmap-title">🧭 So gehst du vor – Schritt für Schritt</div>
-            <ol id="roadmap" class="roadmap"></ol>
-        </div>
         <button id="toggle-commands-button" type="button">📖 Befehle anzeigen</button>
         <div id="commands-list" class="commands-list" hidden></div>
     </section>
@@ -59,12 +55,6 @@
         </section>
 
         <section id="check-result" class="check-result" hidden></section>
-
-        <section class="code-card steps-card locked" id="steps-card">
-            <h3>🚀 Vom Code zum Arduino <small>so geht es nach dem Prüfen weiter</small></h3>
-            <p class="steps-lock-note">🔒 Zuerst alle Aufgaben lösen und auf «Code prüfen» klicken – dann geht es hier weiter.</p>
-            <ol id="steps-detail" class="steps-detail"></ol>
-        </section>
     </div>
 
     <section class="code-card" id="chatgpt-card" hidden>
@@ -74,11 +64,6 @@
         <div class="toolbar">
             <button id="chatgpt-copy-button" type="button">📋 Prompt kopieren</button>
             <a id="chatgpt-open-link" href="https://chatgpt.com" target="_blank" rel="noopener" class="toolbar-link-button">🔗 ChatGPT öffnen</a>
-        </div>
-
-        <div id="chatgpt-steps">
-            <h3>🚀 Vom ChatGPT-Code zum Arduino</h3>
-            <ol id="chatgpt-steps-detail" class="steps-detail"></ol>
         </div>
 
         <div id="components-overview">
@@ -95,7 +80,7 @@
 
 </main>
 
-<script src="exercises-data.js?2"></script>
-<script src="scripts.js?5"></script>
+<script src="exercises-data.js?1"></script>
+<script src="scripts.js?1"></script>
 </body>
 </html>

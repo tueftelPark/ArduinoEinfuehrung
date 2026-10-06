@@ -120,7 +120,6 @@
                 $progress.textContent = c.done + ' / ' + c.total + ' Aufgaben';
             }
             renderTabs();
-            refreshSteps();
         }
 
         // ---------- Tabs ----------
@@ -182,159 +181,6 @@
                 li.textContent = text;
                 $list.appendChild(li);
             });
-        }
-
-        // ---------- Schritt-für-Schritt-Anleitung ----------
-        var $roadmap = document.getElementById('roadmap');
-        var $stepsCard = document.getElementById('steps-card');
-        var $stepsDetail = document.getElementById('steps-detail');
-        var $chatgptStepsDetail = document.getElementById('chatgpt-steps-detail');
-        var copiedOnce = {}; // pro Übung: wurde der Code schon einmal erfolgreich kopiert?
-
-        var STEP_PASTE = {
-            id: 'paste', img: 'img/arduino-ide.png', short: 'In Arduino IDE einfügen',
-            title: 'In die Arduino IDE einfügen',
-            text: 'Öffne das Programm <b>Arduino IDE</b> – das ist das türkise Symbol mit dem ∞-Zeichen (links). ' +
-                  'Lösche dort zuerst den ganzen alten Code: <kbd>Ctrl</kbd> + <kbd>A</kbd> (alles markieren), dann <kbd>Delete</kbd> (alles löschen). ' +
-                  'Füge danach deinen Code ein: <kbd>Ctrl</kbd> + <kbd>V</kbd>. <small>(Am Mac: <kbd>cmd</kbd> statt <kbd>Ctrl</kbd>)</small>'
-        };
-        var STEP_UPLOAD = {
-            id: 'upload', ideBtn: '➜', short: 'Hochladen',
-            title: 'Auf den Arduino hochladen',
-            text: 'Prüfe oben links, dass <b>«Arduino Uno»</b> ausgewählt ist. Klicke dann auf den runden <b>Pfeil-Knopf ➜</b>. ' +
-                  'Warte, bis unten <b>«Hochladen abgeschlossen»</b> steht.',
-            mock: 'upload'
-        };
-
-        var STEPS_CODE = [
-            { id: 'solve', icon: '🧩', short: 'Aufgaben lösen', title: 'Aufgaben lösen',
-              text: 'Fülle alle <b>orangen Felder</b> im Code aus.' },
-            { id: 'check', icon: '✔️', short: 'Code prüfen', title: 'Code prüfen',
-              text: 'Klicke auf <b>«Code prüfen»</b>. Rote Felder sind noch falsch – erst wenn <b>alles grün</b> ist, geht es weiter.' },
-            { id: 'copy', icon: '📋', short: 'Code kopieren', title: 'Code kopieren',
-              text: 'Klicke oben auf <b>«Code kopieren»</b>. Jetzt ist dein ganzer Code gespeichert und bereit zum Einfügen.' },
-            STEP_PASTE,
-            STEP_UPLOAD
-        ];
-
-        var EXTRA_STEPS = {
-            '02_Licht': [
-                { id: 'serial', img: 'img/serial-monitor.png', short: 'Serial-Monitor öffnen',
-                  title: 'Serial-Monitor öffnen (Lupe)',
-                  text: 'Klicke in der Arduino IDE <b>ganz oben rechts auf die Lupe</b> (Symbol links). ' +
-                        'Unten öffnet sich ein Fenster – das ist der <b>Serial-Monitor</b>.',
-                  mock: 'serial',
-                  tip: 'Siehst du nur komische Zeichen? Stelle im Serial-Monitor unten rechts <b>9600 baud</b> ein.' },
-                { id: 'values', icon: '👀', short: 'Sensorwerte anschauen',
-                  title: 'Sensorwerte anschauen',
-                  text: 'Jede Sekunde erscheint eine neue Zahl – das ist die gemessene <b>Helligkeit</b> ' +
-                        '(0 = ganz dunkel, 1023 = ganz hell). Merke dir zwei Zahlen: ' +
-                        '<b>① bei normalem Licht</b> und <b>② wenn du die Hand über den Lichtsensor hältst</b>.',
-                  mock: 'monitor',
-                  tip: '<b>Achtung:</b> Deine Zahlen können ganz anders aussehen als im Beispiel! Jeder Sensor misst ein bisschen anders, '+
-                       'und auch das Licht im Raum spielt eine Rolle. Darum musst du <b>deine eigenen Werte beobachten</b> und die Helligkeitsgrenze im Code '+
-                       'genau an <b>deinen</b> Sensor anpassen (nächster Schritt).' },
-                { id: 'adjust', icon: '✏️', short: 'Helligkeitsgrenze anpassen',
-                  title: 'Helligkeitsgrenze im Code anpassen',
-                  text: 'Ändere in der Arduino IDE ganz oben die Zahl bei <code>int Helligkeitsgrenze = …;</code> ' +
-                        'Wähle eine Zahl <b>zwischen deinen zwei Werten</b>. Beispiel: hell = 400, Hand = 40 → Grenze = 200. ' +
-                        'Klicke danach nochmals auf den <b>Pfeil-Knopf ➜</b>, um neu hochzuladen.',
-                  tip: 'Test: Deckst du den Sensor ab, geht die LED an? Nimmst du die Hand weg, geht sie wieder aus? Dann hast du es geschafft! 🎉' }
-            ]
-        };
-
-        var STEPS_CHATGPT = [
-            { id: 'prompt', icon: '📋', short: 'Prompt kopieren', title: 'Prompt kopieren',
-              text: 'Klicke unten auf <b>«Prompt kopieren»</b>.' },
-            { id: 'send', icon: '💬', short: 'An ChatGPT schicken', title: 'An ChatGPT schicken',
-              text: 'Klicke auf <b>«ChatGPT öffnen»</b>, füge den Prompt mit <kbd>Ctrl</kbd> + <kbd>V</kbd> ein und schicke ihn ab.' },
-            { id: 'idea', icon: '💡', short: 'Idee beschreiben', title: 'Idee beschreiben',
-              text: 'Schreib ChatGPT in eigenen Worten, was dein Programm machen soll. Nenne die Bauteile beim Namen (LED, Button, Buzzer …).' },
-            { id: 'copy', icon: '📋', short: 'Code kopieren', title: 'Code von ChatGPT kopieren',
-              text: 'ChatGPT gibt dir den ganzen Code. Klicke oben rechts im Code-Kasten von ChatGPT auf <b>«Code kopieren»</b>.' },
-            STEP_PASTE,
-            STEP_UPLOAD
-        ];
-
-        function getSteps(ex) {
-            if (ex.kind === 'chatgpt') return STEPS_CHATGPT;
-            return STEPS_CODE.concat(EXTRA_STEPS[ex.id] || []);
-        }
-
-        function stepIconHtml(s, compact) {
-            var cls = compact ? ' compact' : '';
-            if (s.img) return '<img src="' + s.img + '" alt="" class="step-icon-img' + cls + '">';
-            if (s.ideBtn) return '<span class="ide-round-btn step-icon' + cls + '">' + s.ideBtn + '</span>';
-            return '<span class="step-icon-emoji' + cls + '">' + (s.icon || '') + '</span>';
-        }
-
-        function mockHtml(kind) {
-            if (kind === 'upload' || kind === 'serial') {
-                return '<div class="ide-mock" aria-hidden="true">' +
-                    '<span class="ide-round-btn small">✓</span>' +
-                    '<span class="ide-round-btn small' + (kind === 'upload' ? ' hl' : '') + '">➜</span>' +
-                    '<span class="ide-board' + (kind === 'upload' ? ' hl-soft' : '') + '">Arduino Uno ▾</span>' +
-                    '<span class="ide-spacer"></span>' +
-                    '<span class="ide-square">∿</span>' +
-                    '<img class="ide-square-img' + (kind === 'serial' ? ' hl' : '') + '" src="img/serial-monitor.png" alt="">' +
-                    '</div>' +
-                    '<div class="ide-mock-caption">So sieht die Leiste ganz oben in der Arduino IDE aus – ' +
-                    (kind === 'upload' ? 'der <b>Pfeil</b> lädt deinen Code auf den Arduino.' : 'die <b>Lupe</b> ist ganz rechts.') +
-                    '</div>';
-            }
-            if (kind === 'monitor') {
-                return '<div class="monitor-mock" aria-hidden="true"><div class="monitor-head">Serial Monitor</div>' +
-                    '<pre>412\n408\n415  <span class="note">← normales Licht</span>\n38\n35   <span class="note">← Hand über dem Sensor</span></pre></div>';
-            }
-            return '';
-        }
-
-        function stepStatus() {
-            var st = {};
-            if (!currentEx || currentEx.kind === 'chatgpt') return st;
-            var c = countTasks(currentEx, state);
-            if (c.total > 0 && c.done === c.total) st.solve = true;
-            if (st.solve && lastCheckPassed) st.check = true;
-            if (st.check && copiedOnce[currentEx.id]) st.copy = true;
-            st.current = !st.solve ? 'solve' : (!st.check ? 'check' : (!st.copy ? 'copy' : 'paste'));
-            return st;
-        }
-
-        function renderRoadmap(steps, status) {
-            var html = '';
-            steps.forEach(function (s, i) {
-                var cls = status[s.id] === true ? 'done' : (status.current === s.id ? 'current' : '');
-                if (i > 0) html += '<li class="rm-arrow" aria-hidden="true">›</li>';
-                html += '<li class="rm-step ' + cls + '"><span class="step-num">' + (cls === 'done' ? '✓' : (i + 1)) + '</span>' +
-                    stepIconHtml(s, true) + '<span>' + s.short + '</span></li>';
-            });
-            $roadmap.innerHTML = html;
-        }
-
-        function renderStepDetails(container, steps, from) {
-            var html = '';
-            steps.forEach(function (s, i) {
-                if (i + 1 < from) return;
-                html += '<li><span class="step-num big">' + (i + 1) + '</span>' + stepIconHtml(s, false) +
-                    '<div class="step-body"><div class="step-title">' + s.title + '</div>' +
-                    '<div class="step-text">' + s.text + '</div>' +
-                    (s.mock ? mockHtml(s.mock) : '') +
-                    (s.tip ? '<div class="step-tip">💡 ' + s.tip + '</div>' : '') +
-                    '</div></li>';
-            });
-            container.innerHTML = html;
-        }
-
-        function refreshSteps() {
-            if (!currentEx) return;
-            var steps = getSteps(currentEx);
-            renderRoadmap(steps, stepStatus());
-            if (currentEx.kind === 'chatgpt') {
-                renderStepDetails($chatgptStepsDetail, steps, 4);
-            } else {
-                renderStepDetails($stepsDetail, steps, 3);
-                $stepsCard.classList.toggle('locked', !lastCheckPassed);
-            }
         }
 
         // ---------- Aufgabe rendern ----------
@@ -679,8 +525,8 @@
             if (allOk) {
                 $checkResult.className = 'check-result ok';
                 html = '<h4>✅ Sieht gut aus!</h4>' +
-                    '<p>Alle Aufgaben sind richtig gelöst. <b>Weiter mit Schritt 3:</b> Klicke auf «Code kopieren» ' +
-                    'und folge dann unten der Anleitung <b>«Vom Code zum Arduino»</b>.</p>';
+                    '<p>Alle Aufgaben sind richtig gelöst. Du kannst den Code jetzt kopieren. ' +
+                    'Lade ihn danach in die Arduino IDE hoch, um ihn wirklich zu testen.</p>';
             } else {
                 $checkResult.className = 'check-result warn';
                 html = '<h4>🔍 Noch nicht ganz fertig</h4><ul>';
@@ -702,9 +548,7 @@
 
         function setCopyLocked(locked) {
             if (currentEx && currentEx.kind === 'chatgpt') return;
-            if (locked) lastCheckPassed = false;
             $copyButton.classList.toggle('locked', locked);
-            refreshSteps();
         }
 
         // ---------- Kopieren ----------
@@ -752,12 +596,7 @@
             }
             var code = assembleFullCode(currentEx);
             copyToClipboard(code);
-            copiedOnce[currentEx.id] = true;
-            refreshSteps();
-            showToast('✓ Code kopiert – jetzt Arduino IDE öffnen und mit Ctrl+V einfügen (Schritt 4)');
-            if (typeof $stepsCard.scrollIntoView === 'function') {
-                $stepsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            showToast('✓ Code kopiert – in der Arduino IDE mit Strg+V einfügen');
         }
 
         function copyChatgptPrompt() {

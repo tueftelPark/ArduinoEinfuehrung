@@ -21,8 +21,8 @@ So geht's:
 
 -------- AB HIER KOPIEREN (als erste Nachricht an ChatGPT schicken) --------
 
-Ich bin 11 Jahre alt und lerne gerade programmieren im tüftelPark. Ich benutze einen
-Arduino Uno mit dem "Arduino SensorKit" (die Bibliothek dazu heisst
+Ich bin 11 Jahre alt und lerne gerade programmieren im tüftelPark. Ich benutze ein
+Arduino Nano mit dem "Arduino SensorKit" (die Bibliothek dazu heisst
 Arduino_SensorKit.h). Auf meinem SensorKit sind folgende Bauteile schon fertig
 angeschlossen:
 
